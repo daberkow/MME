@@ -1,29 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mme;
 
-import sun.misc.Queue;
-import java.io.*;
-import java.io.FileInputStream;
 import java.util.LinkedList;
-import java.applet.AudioClip;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javazoom.jl.player.Player;
-import sun.audio.*;
-
+import java.sql.ResultSet;
 
 /**
  *
  * @author dan
  */
 public class core_player implements Runnable{
-    LinkedList<String> commands = new LinkedList<String>();
-    LinkedList<String> playlist = new LinkedList<String>();
-    Player player;
+    static LinkedList<String> commands = new LinkedList<String>();
+    static LinkedList<String> playlist = new LinkedList<String>();
+    static Object locker = new Object();
+    Thread streamplayer;
     boolean told_quit;
 
     
@@ -32,8 +20,28 @@ public class core_player implements Runnable{
       
     }
     
+    @Override
     public void run() {
         told_quit = false;
+        Runnable player_stream = new stream_player();
+        streamplayer = new Thread(player_stream);
+        streamplayer.setName("MP3 Player Thread");
+        streamplayer.start();
+        
+        Runnable modeRun = null;
+        Thread modeThread = null;
+        mysqlWrapper MySQLcom = new mysqlWrapper();
+        String returnValue = MySQLcom.return_mode();        
+        switch(returnValue)
+        {
+            case "radio":
+                modeRun = new radioMode();
+                modeThread = new Thread(modeRun);
+                modeThread.setName("Radio Thread");
+                modeThread.start();
+                break;
+                
+        }
         while(!told_quit)
         {
             synchronized(mme.Mme.locker)
@@ -54,31 +62,6 @@ public class core_player implements Runnable{
         }
     }
     
-    public int start(Object passedLock, String passedCommand)
-    {
-        told_quit = false;
-        while(!told_quit)
-        {
-            synchronized(passedLock)
-            {
-                if (!passedCommand.isEmpty())
-                {
-                    commands.add(passedCommand);
-                    passedCommand = "READ";
-                    process_command();
-                }
-            }
-            
-            try{
-                Thread.sleep(500);
-            }catch(Exception e)
-            {
-                System.err.println("Error 1: Player Thread Sleep failure");
-            }
-        }
-        return 0;
-    }
-    
     private void process_command()
     {
         if (commands.size() == 0)
@@ -88,14 +71,64 @@ public class core_player implements Runnable{
         switch(commands.get(0).split(" ")[0])
         {
             case "add":
-                playlist.add(commands.get(0).split(" ")[1]);
+                synchronized(locker)
+                {
+                    playlist.add(commands.get(0).split(" ")[1]);
+                }
                 break;
             case "echo":
-                System.out.println(commands.get(0) + "from thread");
+                System.out.println(commands.get(0));
                 break;
             case "play":
-                play();
-                
+                synchronized(mme.stream_player.locker)
+                {
+                    mme.stream_player.blocker = 2;
+                }
+                break;
+            case "stop":
+                //streamplayer.interrupt();
+                synchronized(mme.stream_player.locker)
+                {
+                    mme.stream_player.blocker = 0;
+                }
+                mme.stream_player.player.close();
+                break;
+            case "next":
+                synchronized(mme.stream_player.locker)
+                {
+                    mme.stream_player.blocker = 1;
+                }
+                mme.stream_player.player.close();
+                synchronized(locker)
+                {
+                    playlist.remove();
+                }
+                synchronized(mme.stream_player.locker)
+                {
+                    mme.stream_player.blocker = 0;
+                }
+                break;
+            case "status":
+                synchronized(mme.stream_player.locker)
+                {
+                    if(mme.stream_player.blocker != 1)
+                    {
+                        System.out.println();
+                        System.out.print("Playing:");
+                    }else{
+                        System.out.println();
+                        System.out.print("Paused:");
+                    }
+                }
+                synchronized(locker)
+                {
+                    if(playlist.size() > 0)
+                    {
+                        System.out.println(playlist.get(0));
+                    }else{
+                        System.out.println();
+                    }
+                }
                 break;
             case "quit":
                 told_quit = true;
@@ -103,34 +136,6 @@ public class core_player implements Runnable{
         }
         commands.remove();
     }
-    
-    private void play()
-    {
-        if(playlist.size() == 0)
-        {
-            System.err.println("Error 2: System told to play with no songs in playlist");
-            return;
-        }
-        
-        try{
-            FileInputStream file = new FileInputStream(playlist.get(0));
-            BufferedInputStream buff = new BufferedInputStream(file);
-        
-            player = new Player(buff);
-            player.play();
-            playlist.remove();
-            //This will stay here until song finishes
-        }catch (Exception e)
-        {
-            System.err.println("Error 3: Attempted to get file and play, failure");
-        }
-        
-        
-    }
-    
-    /*
-     * 
-     */
     
     
 }

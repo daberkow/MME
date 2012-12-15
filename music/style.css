@@ -1,0 +1,14 @@
+body{
+    background-color: #DDDDDD;
+}
+
+#work_area {
+    position: relative;
+    top: 30px;
+    margin: auto;
+    width: 80%;
+    background: #EEEEEE;
+    border-width: 2px;
+    border-style: solid;
+    min-height: 600px;
+}

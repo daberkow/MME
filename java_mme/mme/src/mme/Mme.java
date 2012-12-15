@@ -1,15 +1,5 @@
 package mme;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PipedInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
-
 /**
  *
  * @author dan
@@ -19,71 +9,65 @@ public class Mme {
     static String passing_string = new String();
     
     public static void main(String[] args) {
-        
+        Thread.currentThread().setName("Main Thread");
         Runnable player_run = new core_player();
-        new Thread(player_run).start();
+        Thread Player = new Thread(player_run);
+        Player.setName("Core Player");
+        Player.start();
+        
+        Runnable jobRunnable = new jobRunner();
+        Thread JobController = new Thread(jobRunnable);
+        JobController.setName("Job Controller");
+        JobController.start();
         
         boolean told_quit = false;
         while(!told_quit)
         {
-            System.out.print(">>");
-            
-            InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            String handled_input;
             try {
-                handled_input = reader.readLine();
-            } catch (IOException ex) {
-                Logger.getLogger(Mme.class.getName()).log(Level.SEVERE, null, ex);
-                handled_input = "";
-            }
-            //PipedInputStream input = new PipedInputStream("test");
-            if (handled_input.split(" ").length == 0)
-                break;
-            switch(handled_input.split(" ")[0])
-            {
-                case "add":
-                    //add_song(handled_input);
-                        synchronized(locker)
-                        {
-                            passing_string = handled_input;
-                        }
-                        boolean read_done = false;
-                        while(!read_done)
-                        {
-                            synchronized(locker)
-                            {
-                                if (passing_string == "READ")
-                                {
-                                    read_done = true;
-                                }
-                            }
-                            try{
-                                Thread.sleep(300);
-                            }catch (Exception e)
-                            {
-                                System.err.println("Error 1: Player Thread Sleep failure");
-                            }
-                        }
+                /*System.out.print(">>");
+                
+                InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+                BufferedReader reader = new BufferedReader(inputStreamReader);
+                String handled_input;
+                try {
+                    handled_input = reader.readLine();
+                } catch (IOException ex) {
+                    System.err.println("Error 4: Error with input");
+                    handled_input = "";
+                }
+                //PipedInputStream input = new PipedInputStream("test");
+                if (handled_input.split(" ").length == 0)
                     break;
-                case "echo":
-                    synchronized(locker)
-                    {
-                        passing_string = "echo hello";
-                    }
-                    break;
-                case "play":
-                    synchronized(locker)
-                    {
-                        passing_string = "play hello";
-                    }
-                    break;
+                passed_command(handled_input);*/
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                System.err.println("Error 7: Idling in main thread");
             }
         }
     }
     
-    private static void add_song(String passed_line)
+    private static void passed_command(String passed_line)
     {
-        
+        synchronized(locker)
+        {
+            passing_string = passed_line;
+        }
+        boolean read_done = false;
+        while(!read_done)
+        {
+            synchronized(locker)
+            {
+                if (passing_string == "READ")
+                {
+                    read_done = true;
+                }
+            }
+            try{
+                Thread.sleep(200);
+            }catch (Exception e)
+            {
+                System.err.println("Error 1: Player Thread Sleep failure");
+            }
+        }
     }
 }
