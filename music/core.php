@@ -60,5 +60,14 @@
                 return false;
             }
         }
+        
+        public static function db_Music_Cat()
+        {
+            database_helper::db_connect();
+            $songs_return[0] = database_helper::db_return_array("SELECT * FROM `songs` WHERE `status`>=1");
+            $songs_return[1] = database_helper::db_return_array("SELECT * FROM `artists`");
+            $songs_return[2] = database_helper::db_return_array("SELECT * FROM `album`");
+            return $songs_return;
+        }
     }
 ?>

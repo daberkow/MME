@@ -9,7 +9,7 @@
     <body>
         <div id="main_body">
             <?PHP include("header.php"); ?>
-            <div id="work_area">
+            <div id="work_area" style='margin-top: 10px;'>
                 <?PHP
                     include('core.php');
                     $Mode = database_helper::db_return_array("SELECT `value` FROM `settings` WHERE `setting`='mode';");
