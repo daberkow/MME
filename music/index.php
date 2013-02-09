@@ -3,8 +3,8 @@
         <title>MME: Home</title>
         <link rel="stylesheet" type="text/css" href="./static/bootstrap/css/bootstrap.css"/>
         <link rel="stylesheet" type="text/css" href="./style.css"/>
-        <script src="./static/bootstrap/js/bootstrap.js"></script>
         <script src="./static/jquery.js"></script>
+        <script src="./static/bootstrap/js/bootstrap.js"></script>
     </head>
     <body>
         <div id="main_body">
