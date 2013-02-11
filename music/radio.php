@@ -30,9 +30,10 @@
     <tr>
         <th>
             Categories
-        </th>
-        <th>
-            
+            <select id='musicSort' onchange='changeOption();'>
+                <option value='music'><i class="icon-music"></i>Songs</option>
+                <option value='artist'><i class="icon-user"></i>Artists</option>
+            </select>
         </th>
         <th>
             
@@ -42,37 +43,44 @@
         </th>
         <th>
             Stations
+            <select>
+                <option value="89">89Mhz</option>
+                <option value="89">91Mhz</option>
+                <option value="89">93Mhz</option>
+                <option value="89">95Mhz</option>
+                <option value="89">98Mhz</option>
+            </select>
         </th>
     </tr>
     <tr style='height: 100%; width: 100%;' >
-        <td style='height: 100%; width: 20%;' >
-            <DIV id='col1' style='width: 100%; height: 100%; border-width: 1px; border-style: solid; border-color: black;'>
-                <div id='allMusic' style='border-radius: 14%;' onclick='listSongs();' onmouseover="hightlight('allMusic', true);" onmouseout="hightlight('allMusic', false);"><i class="icon-music"></i>Songs</div>
-                <div id='allArtist' style='border-radius: 14%;' onclick='listArtists();' onmouseover="hightlight('allArtist', true);" onmouseout="hightlight('allArtist', false);"><i class="icon-user"></i>Artists</div>
-            </DIV>
-        </td>
-        <td style='height: 100%; width: 20%;' >
-            <DIV id='col2' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;'>
-                
+        <td style='height: 100%; width: 40%;' >
+            <DIV id='col1' style='width: 100%; height: 100%; border-width: 1px; border-style: solid; border-color: black;border-right-style: dashed;'>
             </DIV>
         </td>
         <td style='height: 100%; width: 20%;'>
-            <DIV id='col3' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;'>
+            <DIV id='col3' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;border-left-style: dashed;'>
                 
             </DIV>
         </td>
         <td style='height: 100%; width: 20%;' >
-            <DIV id='col4' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;'>
+            <DIV id='col4' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-right-style: dashed;'>
                 
             </DIV>
         </td>
         <td style='height: 100%; width: 20%;' >
-            <DIV id='col5' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;'>
-                <div id='88Mhz' style='border-radius: 14%;' onclick='SelectStation("88Mhz");' onmouseover="hightlight('88Mhz', true);" onmouseout="hightlight('88Mhz', false);"></i>88.0Mhz</div>
+            <DIV id='list' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-left-style: dashed;'>
+               
             </DIV>
         </td>
     </tr>
 </table>
-
+<script>
+    listSongs();
+    load();
+    new dragObject("88Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+    new dragObject("91Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+    new dragObject("93Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+    new dragObject("95Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+</script>
 
 

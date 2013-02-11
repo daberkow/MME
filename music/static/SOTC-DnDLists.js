@@ -273,11 +273,7 @@ function load()
   PlaceHolder.style.backgroundColor = "rgb(225,225,225)";
   PlaceHolder.SourceI = null;
 
-  new dragObject("e1", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-  new dragObject("e2", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-  new dragObject("e3", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-  new dragObject("e4", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-  new dragObject("e5", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+
 }
 
 function itemDragBegin(eventObj, element)
