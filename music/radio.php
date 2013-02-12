@@ -35,14 +35,11 @@
                 <option value='artist'><i class="icon-user"></i>Artists</option>
             </select>
         </th>
-        <th>
-            
+        <th></th>
+        <th style='margin:auto;'>
+            Station
         </th>
         <th>
-            
-        </th>
-        <th>
-            Stations
             <select>
                 <option value="89">89Mhz</option>
                 <option value="89">91Mhz</option>
@@ -63,12 +60,18 @@
             </DIV>
         </td>
         <td style='height: 100%; width: 20%;' >
-            <DIV id='col4' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-right-style: dashed;'>
+            <DIV style='height:20%; text-align:center;'>
+                Stations Settings:
+            </DIV>
+            <DIV id='col4' style='height: 80%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-right-style: dashed;'>
                 
             </DIV>
         </td>
         <td style='height: 100%; width: 20%;' >
-            <DIV id='list' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-left-style: dashed;'>
+            <DIV style='height:20%'>
+                Commercialss
+            </DIV>
+            <DIV id='list' style='height: 80%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-left-style: dashed;'>
                
             </DIV>
         </td>

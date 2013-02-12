@@ -1,6 +1,6 @@
 ///SOTC Drag And Drop Lists
 ///http://www.switchonthecode.com
-
+///http://tech.pro/tutorial/688/javascript-tutorial-drag-drop-lists
 function Position(x, y)
 {
   this.X = x;
