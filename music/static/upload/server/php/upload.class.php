@@ -422,7 +422,7 @@ class UploadHandler
     {
 	include_once("../../../../core.php");
 	database_helper::db_insert_query("insert into `songs` (`file`,`status`) values ('" . $passedFilename . "',0)");
-	database_helper::db_insert_query("INSERT INTO `MME`.`jobs` (`id`, `type`, `arguments`, `status`, `start`, `end`) VALUES (NULL, '1', '', '0', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');");
+	database_helper::db_insert_query("INSERT INTO `jobs` (`id`, `type`, `arguments`, `status`, `start`, `end`) VALUES (NULL, '1', '', '0', CURRENT_TIMESTAMP, '0000-00-00 00:00:00');");
     }
 
     public function delete() {

@@ -29,7 +29,7 @@ public class mysqlWrapper {
                 System.err.println("Error 10: Connecting to database");
             }
         }
-        String url = "jdbc:mysql://localhost:3306/MME?zeroDateTimeBehavior=convertToNull";
+        String url = "jdbc:mysql://localhost:3306/mme?zeroDateTimeBehavior=convertToNull";
         String user = "app_user";
         String password = "Zwu26UFE7VsKpNLY";
         try {
@@ -202,6 +202,9 @@ public class mysqlWrapper {
                 case 0:
                     rs = st.executeQuery("SELECT * FROM `songs` WHERE `status`=0;");
                     break;
+                case 1:
+                    rs = st.executeQuery("SELECT * FROM `songs` WHERE `status`=1;");
+                    break;
                 default:
                     rs = st.executeQuery("SELECT * FROM `songs`;");
                     break;
@@ -240,6 +243,50 @@ public class mysqlWrapper {
                 System.err.println("Error 6: Cleaning sql varibles");
             }
             return returnArray.toArray(new SONG[0]);
+        }
+    }
+    
+    public String return_song(int id) //0 is unnamed
+    {
+        connect();
+        Statement st = null;
+        ResultSet rs = null;
+        String finalAnswer = "";
+        try {
+            
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM `songs` WHERE `id`=" + id + ";");
+
+            try{
+                while(rs.next())
+                {
+                    finalAnswer = rs.getString("file");
+                }
+            }catch(Exception e)
+            {
+                System.err.println("Error 6: Error getting mode to enter");
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("Error 5: Error in sql statement");
+            disconnect();
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+
+            } catch (SQLException ex) {
+                System.err.println("Error 6: Cleaning sql varibles");
+            }
+            return finalAnswer;
         }
     }
     

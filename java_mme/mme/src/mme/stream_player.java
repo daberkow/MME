@@ -38,9 +38,10 @@ public class stream_player implements Runnable{
                 {
                     top_playlist = mme.core_player.playlist.getFirst();
                     System.out.println("Got " + top_playlist);
-                }else{
+                }/*else{
                     System.out.println("waiting for songs");
-                }
+                }*/
+                
             }
             check_blocked();
             if (!top_playlist.isEmpty())
@@ -65,7 +66,7 @@ public class stream_player implements Runnable{
                 }
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(60);
             } catch (InterruptedException ex) {
                 System.err.println("Error 1: Player Thread Sleep failure");
             }
@@ -99,7 +100,7 @@ public class stream_player implements Runnable{
             }
         
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 System.err.println("Error 1: Player Thread Sleep failure");
             }

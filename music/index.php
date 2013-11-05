@@ -18,6 +18,9 @@
                         case "radio":
                             include("radio.php");
                             break;
+                        case "jukebox":
+                            include("jukebox.php");
+                            break;
                     }
                 ?>
             </div>

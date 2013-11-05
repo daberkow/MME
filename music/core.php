@@ -8,7 +8,7 @@
             if (isset($connected) == false)
             {
                 $connected = mysql_connect("localhost", "MME_web", "UcbtBQFHyDWZx83v") or die("Could Not Connect To MYSQL");
-                mysql_select_db("MME") or die ("Could Not Connect to DATABASE");
+                mysql_select_db("mme") or die ("Could Not Connect to DATABASE");
             }
         }
         
@@ -64,7 +64,7 @@
         public static function db_Music_Cat()
         {
             database_helper::db_connect();
-            $songs_return[0] = database_helper::db_return_array("SELECT * FROM `songs` WHERE `status`>=1");
+            $songs_return[0] = database_helper::db_return_array("SELECT * FROM `songs` WHERE `status`>=1 ORDER BY id");
             $songs_return[1] = database_helper::db_return_array("SELECT * FROM `artists`");
             $songs_return[2] = database_helper::db_return_array("SELECT * FROM `album`");
             return $songs_return;

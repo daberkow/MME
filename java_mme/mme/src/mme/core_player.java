@@ -54,7 +54,7 @@ public class core_player implements Runnable{
             }
             process_command();
             try{
-                Thread.sleep(500);
+                Thread.sleep(50);
             }catch(Exception e)
             {
                 System.err.println("Error 1: Player Thread Sleep failure");
@@ -64,6 +64,7 @@ public class core_player implements Runnable{
     
     private void process_command()
     {
+        mysqlWrapper MySQL = new mysqlWrapper();
         if (commands.size() == 0)
         {
             return;
@@ -71,9 +72,11 @@ public class core_player implements Runnable{
         switch(commands.get(0).split(" ")[0])
         {
             case "add":
+                int song_id = Integer.parseInt(commands.get(0).split(" ")[1]);
+                
                 synchronized(locker)
                 {
-                    playlist.add(commands.get(0).split(" ")[1]);
+                    playlist.add(MySQL.return_song(song_id));
                 }
                 break;
             case "echo":
@@ -89,7 +92,7 @@ public class core_player implements Runnable{
                 //streamplayer.interrupt();
                 synchronized(mme.stream_player.locker)
                 {
-                    mme.stream_player.blocker = 0;
+                    mme.stream_player.blocker = 1;
                 }
                 mme.stream_player.player.close();
                 break;
@@ -132,6 +135,17 @@ public class core_player implements Runnable{
                 break;
             case "quit":
                 told_quit = true;
+                break;
+            case "list":
+                /*if (commands.get(0).split(" ").length == 1)
+                {
+                    System.out.println("list (artist|songs|albums)");
+                }*/
+                SONG[] SongsDB = MySQL.return_songs(1);
+                for(int i = 0; i < SongsDB.length; i++)
+                {
+                    System.out.println("ID: " + SongsDB[i].get_id() +  ", Song: " + SongsDB[i].get_name());
+                }
                 break;
         }
         commands.remove();
