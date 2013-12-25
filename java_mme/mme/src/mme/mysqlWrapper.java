@@ -511,7 +511,7 @@ public class mysqlWrapper {
         int rs = 0;
         
         try {
-            String Query = "INSERT INTO `MME`.`album` (`id`, `name`, `artist`) VALUES (NULL, '" + passedName + "', " + passedArtist + ");";
+            String Query = "INSERT INTO `mme`.`album` (`id`, `name`, `artist`) VALUES (NULL, '" + passedName + "', " + passedArtist + ");";
             st = con.createStatement();
             rs = st.executeUpdate(Query);
             
@@ -542,7 +542,7 @@ public class mysqlWrapper {
         int rs = 0;
         
         try {
-            String Query = "INSERT INTO `MME`.`artists` (`id`, `artist`) VALUES (NULL, '" + passedArtist + "');";
+            String Query = "INSERT INTO `mme`.`artists` (`id`, `artist`) VALUES (NULL, '" + passedArtist + "');";
             st = con.createStatement();
             rs = st.executeUpdate(Query);
             

@@ -1,28 +1,28 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mme;
+
+package serial_test;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 /**
  *
  * @author dan
  */
-public class radioMode implements Runnable{
-    static Object locker = new Object();
-    
-    public radioMode()
-    {
-        
-    }
-    
-    public void run()
-    {
+public class Serial_test {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
         SerialPort serialPort = new SerialPort("/dev/pts/1");
-        /*
+
         try {
             System.out.println("Port opened: " + serialPort.openPort()); 
             System.out.println("Params setted: " + serialPort.setParams(9600, 8, 1, 0)); 
@@ -30,7 +30,7 @@ public class radioMode implements Runnable{
             System.out.println("Port closed: " + serialPort.closePort());
         } catch (SerialPortException ex){
             System.out.println(ex);
-        }*/
+        }
     }
     
 }

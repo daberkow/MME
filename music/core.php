@@ -69,5 +69,12 @@
             $songs_return[2] = database_helper::db_return_array("SELECT * FROM `album`");
             return $songs_return;
         }
+        
+        public static function db_Radio_Cat()
+        {
+            database_helper::db_connect();
+            $songs_return[0] = database_helper::db_return_array("SELECT * FROM `radio` WHERE `status`>0");
+            return $songs_return;
+        }
     }
 ?>

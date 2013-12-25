@@ -1,89 +1,44 @@
-<?PHP include('./library.php'); ?>
-<script src="./radio.js"></script>
-<script src="./static/SOTC-DnDLists.js"></script>
-<style>
-    .drag, .list
-    {
-      width: 150px;
-    }
-    
-    .drag
-    {
-      z-index: 100;
-      position:absolute;
-      opacity: .50;
-      filter: alpha(opacity=50);
-    }
-    
-    .list
-    {
-      position:relative;
-      z-index: 1;
-      opacity: 1;
-      filter: alpha(opacity=100);
-      top: 0px;
-      left: 0px;
-    }
-</style>
+<?PHP 
+    include('./library.php');
+    $station = database_helper::db_Radio_Cat();
+    echo "<script> Radio = JSON.parse('" . json_encode($station) . "'); </script>";
+?>
 
-<table style='height: 100%; width: 100%;' >
-    <tr>
-        <th>
-            Categories
-            <select id='musicSort' onchange='changeOption();'>
-                <option value='music'><i class="icon-music"></i>Songs</option>
-                <option value='artist'><i class="icon-user"></i>Artists</option>
-            </select>
-        </th>
-        <th></th>
-        <th style='margin:auto;'>
-            Station
-        </th>
-        <th>
-            <select>
-                <option value="89">89Mhz</option>
-                <option value="89">91Mhz</option>
-                <option value="89">93Mhz</option>
-                <option value="89">95Mhz</option>
-                <option value="89">98Mhz</option>
-            </select>
-        </th>
-    </tr>
-    <tr style='height: 100%; width: 100%;' >
-        <td style='height: 100%; width: 40%;' >
-            <DIV id='col1' style='width: 100%; height: 100%; border-width: 1px; border-style: solid; border-color: black;border-right-style: dashed;'>
-            </DIV>
-        </td>
-        <td style='height: 100%; width: 20%;'>
-            <DIV id='col3' style='height: 100%; width: 100%; border-width: 1px; border-style: solid; border-color: black;border-left-style: dashed;'>
-                
-            </DIV>
-        </td>
-        <td style='height: 100%; width: 20%;' >
-            <DIV style='height:20%; text-align:center;'>
-                Stations Settings:
-            </DIV>
-            <DIV id='col4' style='height: 80%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-right-style: dashed;'>
-                
-            </DIV>
-        </td>
-        <td style='height: 100%; width: 20%;' >
-            <DIV style='height:20%'>
-                Commercialss
-            </DIV>
-            <DIV id='list' style='height: 80%; width: 100%; border-width: 1px; border-style: solid; border-color: black; border-left-style: dashed;'>
-               
-            </DIV>
-        </td>
-    </tr>
-</table>
+<script src="./radio.js"></script>
+
+<div style='height: 100%; width: 100%; position:relative;'>
+    <div style='height:5%; width:30%; margin: auto;'>
+        <h3>Manage Station:
+        <select>
+            <option value="89">89Mhz</option>
+            <option value="91">91Mhz</option>
+            <option value="93">93Mhz</option>
+            <option value="95">95Mhz</option>
+            <option value="98">98Mhz</option>
+        </select></h3>
+    </div>
+    <div style='height: 6%; width: 100%;'>
+        <div style='height: 100%; width: 49%; display: inline-block;float:left;'>
+            <h2 style='margin: 0px;'>Music Library</h2>
+        </div>
+        <div style='height: 100%; width: 49%; display: inline-block; float:right; text-align: right;'>
+            <h2 style='margin:0px;' >Station Lineup</h2>
+        </div>
+    </div>
+    <div style='height: 80%; width: 100%;'>
+        <div id='col1' style='height: 100%; width: 48%; display: inline-block; border-style: solid; float:left;'>
+  
+        </div>
+        <div id='col2' style='height: 100%; width: 48%; display: inline-block; border-style: solid; float:right;'>
+            
+        </div>
+    </div>
+</div>
+
+
 <script>
     listSongs();
-    load();
-    new dragObject("88Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-    new dragObject("91Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-    new dragObject("93Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
-    new dragObject("95Mhz", null, null, null, itemDragBegin, itemMoved, itemDragEnd, false);
+    addButtons();
 </script>
 
 

@@ -13,18 +13,18 @@ function listSongs()
     $("#col1").html("");
     for(i in MusicLibrary[0])
     {
-        $("#col1").append("<DIV id='SONG_" + i + "' style=\"padding-left: 10px;\" onclick=\"selectedItem('SONG_" + i + "')\" onmouseover=\"hightlight('SONG_" + i + "', true);\" onmouseout=\"hightlight('SONG_" + i + "', false);\">" + MusicLibrary[0][i]['song'] + "</DIV>");
+        $("#col1").append("<DIV id='SONG_" + i + "' style=\"padding-left: 10px;\" onclick=\"selectedItem('SONG_" + i + "')\" onmouseover=\"hightlight('SONG_" + i + "', true);\" onmouseout=\"hightlight('SONG_" + i + "', false);\">" + albumIDtoArtist(MusicLibrary[0][i]['album']) + " - " + MusicLibrary[0][i]['song'] + "</DIV>");
     }
 }
 
-function listArtists()
+/*function listArtists()
 {
     $("#col1").html("");
     for(i in MusicLibrary[1])
     {
         $("#col1").append("<DIV id='ARTIST_" + i + "' style=\"padding-left: 10px;\" onmouseover=\"hightlight('ARTIST_" + i + "', true);\" onmouseout=\"hightlight('ARTIST_" + i + "', false);\">" + MusicLibrary[1][i]['artist'] + "</DIV>");
     }
-}
+}*/
 
 function selectedItem(passedItemID)
 {
@@ -42,7 +42,7 @@ function selectedItem(passedItemID)
     }
 }
 
-function buildPane(passedArraySong)
+/**function buildPane(passedArraySong)
 {
     //stopped here
     outputString = "";
@@ -55,9 +55,7 @@ function buildPane(passedArraySong)
     outputString += "</tbody></table>";
     outputString += "<button style='margin-left: 10%'>Add to Selected Station</button>"
     return outputString;
-}
-
-
+}*/
 
 function albumIDtoArtist(passedAlbumID)
 {
@@ -105,4 +103,18 @@ function changeOption()
             listArtists();
             break;
     }
+}
+
+function addButtons()
+{
+    for(i in MusicLibrary[0])
+    {
+        $("#SONG_" + i).append("<span id='access' class='glyphicon glyphicon-unchecked' style='float:right;' onclick='add_song(" + i + "," + MusicLibrary[0][i]['id'] + ")'></span>");
+    }
+}
+
+function add_song(JSID, SongID)
+{
+    $("#SONG_" + JSID + " #access").attr("class", "glyphicon glyphicon-check");
+    //stoppe here, need to add checked songs to database, and local cache, also make it undoable.
 }
