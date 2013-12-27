@@ -26,15 +26,16 @@ public class jobRunner implements Runnable{
     @Override
     public void run() {
         mysqlWrapper mysqlHandler = new mysqlWrapper();
-        synchronized(locker)
-        {
-            if (passing_string.equals("QUIT"))
-            {
-                told_quit = true;
-            }
-        }
+
         while(!told_quit)
         {
+            synchronized(locker)
+            {
+                if (passing_string.equals("QUIT"))
+                {
+                    told_quit = true;
+                }
+            }
              JOB[] undoneJobs = mysqlHandler.return_jobs();
              for(int i = 0; i < undoneJobs.length; i++)
              {

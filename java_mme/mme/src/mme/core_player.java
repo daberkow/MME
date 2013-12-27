@@ -12,7 +12,7 @@ public class core_player implements Runnable{
     static LinkedList<String> playlist = new LinkedList<String>();
     static Object locker = new Object();
     Thread streamplayer;
-    boolean told_quit;
+    static boolean told_quit;
 
     
     public core_player()
@@ -59,6 +59,15 @@ public class core_player implements Runnable{
             {
                 System.err.println("Error 1: Player Thread Sleep failure");
             }
+        }
+        
+        //now told to sleep, kill subthreads
+        while (modeThread.isAlive() && streamplayer.isAlive())
+        {
+            System.out.println("Waiting for subthreads to close");
+            try {
+                Thread.sleep(100);
+            }catch(Throwable e){}
         }
     }
     

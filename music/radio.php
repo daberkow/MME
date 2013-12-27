@@ -9,12 +9,12 @@
 <div style='height: 100%; width: 100%; position:relative;'>
     <div style='height:5%; width:30%; margin: auto;'>
         <h3>Manage Station:
-        <select>
-            <option value="89">89Mhz</option>
-            <option value="91">91Mhz</option>
-            <option value="93">93Mhz</option>
-            <option value="95">95Mhz</option>
-            <option value="98">98Mhz</option>
+        <select id='stationID' onchange='changeStation();'>
+            <option value="0">89Mhz</option>
+            <option value="1">91Mhz</option>
+            <option value="2">93Mhz</option>
+            <option value="3">95Mhz</option>
+            <option value="4">98Mhz</option>
         </select></h3>
     </div>
     <div style='height: 6%; width: 100%;'>
@@ -38,7 +38,6 @@
 
 <script>
     listSongs();
-    addButtons();
 </script>
 
 

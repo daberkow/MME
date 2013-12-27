@@ -3,7 +3,16 @@ package mme;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.LinkedList;
+import javax.sound.sampled.FloatControl;
+import javazoom.jl.decoder.Equalizer;
+import javazoom.jl.player.AudioDevice;
+import javazoom.jl.player.AudioDeviceBase;
+import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -25,11 +34,13 @@ public class stream_player implements Runnable{
         blocker = 1;
         boolean please_quit = false;
         while(!please_quit){
-            check_blocked();
+            //check_blocked();
             String top_playlist = new String();
             
             synchronized(mme.core_player.locker)
             {
+                if (mme.core_player.told_quit)
+                    please_quit = true;
                 if (blocker == 2)
                 {
                     blocker = 0;
@@ -43,12 +54,12 @@ public class stream_player implements Runnable{
                 }*/
                 
             }
-            check_blocked();
+            //check_blocked();
             if (!top_playlist.isEmpty())
             {
                 play(top_playlist);
             }
-            check_blocked();
+            //check_blocked();
             synchronized(mme.core_player.locker)
             {
                 if (blocker == 2)
@@ -80,6 +91,12 @@ public class stream_player implements Runnable{
             BufferedInputStream buff = new BufferedInputStream(file);
             player = new Player(buff);
             player.play();
+            javazoom.jl.player.JavaSoundAudioDevice dan = new JavaSoundAudioDevice();
+            javazoom.jl.decoder.Equalizer eq = new Equalizer();
+            String bip = "bip.mp3";
+            Media hit = new Media(bip);
+            MediaPlayer mediaPlayer = new MediaPlayer(hit);
+            mediaPlayer.play();
             
             //This will stay here until song finishes
         }catch (Exception e)

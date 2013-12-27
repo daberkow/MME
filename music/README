@@ -1,8 +1,5 @@
-MME
-Dan Berkowitz
-12/12/12
+Installation:
 
-Known Problems:
-    Job not added when music uploaded
-    Premature disconnection sometimes?
-    When songs uploaded, sorting removes them from folder
+On a debian based system:
+	Edit /etc/php5/apache2/php.ini, line "upload_max_filesize = 2M". The "2M" limits uploads to 2MB which for music is too small, I made it "20M"; but feel free to make it more.
+	In the web folder there is a folder called, "/static/upload/server/php/files" this has to have writes so apache can put files in there.

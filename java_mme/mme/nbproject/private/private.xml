@@ -5,10 +5,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/core_player.java</file>
-            <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/jobRunner.java</file>
-            <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/Jobs/ID3Tagger.java</file>
             <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/Mme.java</file>
-            <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/mysqlWrapper.java</file>
+            <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/stream_player.java</file>
             <file>file:/home/dan/Projects/mme/java_mme/mme/src/mme/radioMode.java</file>
         </group>
     </open-files>

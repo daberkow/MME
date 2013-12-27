@@ -24,7 +24,7 @@ public class Mme {
         JobController.start();
         
         boolean told_quit = false;
-        while(!told_quit)
+        while(!told_quit && Player.isAlive())
         {
             try {
                 System.out.print(">>");
@@ -47,6 +47,11 @@ public class Mme {
                 System.err.println("Error 7: Idling in main thread");
             }
         }
+        synchronized(mme.jobRunner.locker)
+        {
+            mme.jobRunner.passing_string = "QUIT";
+        }
+        System.out.println("All threads closed, exiting...");
     }
     
     private static void passed_command(String passed_line)

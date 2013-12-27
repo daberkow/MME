@@ -1,2 +1,7 @@
-Because its the best
-Turning to using java
+MME v0.1 December 2013
+
+A java based music manament engine, that will interface with different arduino hardware systems via a raspberry pi. The web part goes on the pi for managment,then the java app runs on the same system to handle music playback and hardware interactions.
+
+Big Board at https://trello.com/b/4Ya33HEu/mme
+
+Add your user to "dialout" group to allow for serial from arduino
