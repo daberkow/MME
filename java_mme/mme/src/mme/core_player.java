@@ -2,6 +2,13 @@ package mme;
 
 import java.util.LinkedList;
 import java.sql.ResultSet;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.Port;
+import javazoom.jl.player.JavaSoundAudioDevice;
 
 /**
  *
@@ -154,6 +161,13 @@ public class core_player implements Runnable{
                 for(int i = 0; i < SongsDB.length; i++)
                 {
                     System.out.println("ID: " + SongsDB[i].get_id() +  ", Song: " + SongsDB[i].get_name());
+                }
+                break;
+            case "up":
+                if (mme.stream_player.audio instanceof JavaSoundAudioDevice)
+                {
+                    JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) mme.stream_player.audio;
+                    jsAudio.setLineGain(-40.0F);
                 }
                 break;
         }

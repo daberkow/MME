@@ -1,18 +1,12 @@
 package mme;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.net.URL;
 import java.util.LinkedList;
-import javax.sound.sampled.FloatControl;
-import javazoom.jl.decoder.Equalizer;
-import javazoom.jl.player.AudioDevice;
-import javazoom.jl.player.AudioDeviceBase;
-import javazoom.jl.player.JavaSoundAudioDevice;
-import javazoom.jl.player.Player;
-import javazoom.jl.player.advanced.AdvancedPlayer;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javazoom.jl.player.*;
 
 /**
  *
@@ -23,7 +17,7 @@ public class stream_player implements Runnable{
     static Object locker = new Object();
     static int blocker; //0 is not blocking, 1 is blocking, 2 is just resumed play
     static Player player;
-    
+    static JavaSoundAudioDevice audio;
     public stream_player(){
         
     }
@@ -86,17 +80,24 @@ public class stream_player implements Runnable{
          
     private void play(String passed_song)
     {
-        try{
+        try{            
             FileInputStream file = new FileInputStream(passed_song);
             BufferedInputStream buff = new BufferedInputStream(file);
-            player = new Player(buff);
+            audio = new JavaSoundAudioDevice();
+            player = new Player(buff, audio);
             player.play();
-            javazoom.jl.player.JavaSoundAudioDevice dan = new JavaSoundAudioDevice();
-            javazoom.jl.decoder.Equalizer eq = new Equalizer();
-            String bip = "bip.mp3";
-            Media hit = new Media(bip);
-            MediaPlayer mediaPlayer = new MediaPlayer(hit);
-            mediaPlayer.play();
+
+            /*
+            This can change the volume, the range is -80F to 6F
+            
+            if (mme.stream_player.audio instanceof JavaSoundAudioDevice)
+            {
+                JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) mme.stream_player.audio;
+                jsAudio.setLineGain(0.5F);
+            }
+            */
+            
+            
             
             //This will stay here until song finishes
         }catch (Exception e)

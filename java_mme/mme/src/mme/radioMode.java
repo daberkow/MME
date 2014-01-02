@@ -4,7 +4,7 @@
  */
 package mme;
 
-import java.sql.Types;
+import javazoom.jl.player.JavaSoundAudioDevice;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
@@ -14,6 +14,9 @@ import jssc.SerialPortException;
  */
 public class radioMode implements Runnable{
     static Object locker = new Object();
+    static int MasterVolume = 0;
+    static int MasterChannel = 0;
+    
     
     public radioMode()
     {
@@ -48,6 +51,7 @@ public class radioMode implements Runnable{
                 if (HoldingBuffer.length() > 19)
                 {
                     Check_Input(HoldingBuffer);
+                    HoldingBuffer = "";
                 }                
             }
             
@@ -68,10 +72,36 @@ public class radioMode implements Runnable{
             System.out.println("Port closed: " + serialPort.closePort());
         }catch (Throwable e) {}
     }
-    private void Check_Input(String passedData)
+    private void Check_Input (String passedData) 
     {
-        
-
+        String[] Chopped_Input = passedData.split("\\|");
+        int volume = 0;
+        int station = 0;
+        for (int i = 0; i < Chopped_Input.length; i++)
+        {
+            if (Chopped_Input[i].contains("-"))
+            {
+                volume = Integer.parseInt(Chopped_Input[i+1]);
+                station = Integer.parseInt(Chopped_Input[i+2]);
+                break;
+            }
+        }
+        if (MasterVolume != volume)
+        {
+            System.out.println("Changing Volume: " + volume);
+            float NewVolume = -80F + (volume - 0) * (2F - -80F) / (100 - 0);
+            if (mme.stream_player.audio instanceof JavaSoundAudioDevice)
+            {
+                JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) mme.stream_player.audio;
+                jsAudio.setLineGain(NewVolume);
+            }
+        }
+        if (MasterChannel != station)
+        {
+            System.out.println("Channel Changed: " + station);
+            //need to change entire playlist in mme.core_player.playlist, then reset stream_player
+            
+        }
         System.out.println(passedData);
     }
     
